@@ -1,0 +1,30 @@
+[package]
+name = "doggy-watch"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+members = [ "entity", "migration", "youtube"]
+
+[dependencies]
+entity = { path = "entity" }
+youtube = { path = "youtube" }
+
+anyhow = "1.0"
+dotenvy = "0.15"
+sea-orm = { version = "1.1", features = ["macros", "sqlx-sqlite", "runtime-tokio-rustls", "sqlx-postgres", "with-uuid", "with-chrono"] }
+teloxide = { version = "0.13", features = ["macros"] }
+tokio = { version = "1.42", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+uuid = { version = "1.11", features = ["fast-rng", "v4"] }
+chrono = "0.4"
+tracing-panic = "0.1"
+lazy_static = "1.5.0"
+indexmap = "2.7.0"
+dashmap = "6.1.0"
+
+# https://github.com/teloxide/teloxide/issues/1154
+# [profile.dev]
+# opt-level = 1
