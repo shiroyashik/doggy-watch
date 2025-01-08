@@ -10,7 +10,7 @@ Telegram бот для предложения YouTube видео на стрим
 или
 ![Discord](https://badgen.net/badge/icon/Discord?icon=discord&label)
 
-Если у вас есть идем, нашли баг или хотите предложить улучшения
+Если у вас есть идеи, нашли баг или хотите предложить улучшения:
 создавайте [issue](https://github.com/shiroyashik/doggy-watch/issues)
 или свяжитесь со мной напрямую через Discord/Telegram (**@shiroyashik**).
 
