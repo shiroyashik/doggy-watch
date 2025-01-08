@@ -1,14 +1,15 @@
 [package]
 name = "doggy-watch"
-version = "0.1.0"
+authors = ["Shiroyashik <shiroyashik@shsr.ru>"]
+version = "0.2.0"
 edition = "2021"
 publish = false
 
 [workspace]
-members = [ "entity", "migration", "youtube"]
+members = [ "database", "youtube", "database/migration" ]
 
 [dependencies]
-entity = { path = "entity" }
+database = { path = "database" }
 youtube = { path = "youtube" }
 
 anyhow = "1.0"
@@ -21,9 +22,9 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 uuid = { version = "1.11", features = ["fast-rng", "v4"] }
 chrono = "0.4"
 tracing-panic = "0.1"
-lazy_static = "1.5.0"
-indexmap = "2.7.0"
-dashmap = "6.1.0"
+lazy_static = "1.5"
+indexmap = "2.7"
+dashmap = "6.1"
 
 # https://github.com/teloxide/teloxide/issues/1154
 # [profile.dev]

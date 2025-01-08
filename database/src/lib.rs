@@ -3,6 +3,8 @@
 pub mod prelude;
 
 pub mod actions;
+pub mod archived;
 pub mod moderators;
-pub mod sea_orm_active_enums;
+pub mod requests;
+pub mod users;
 pub mod videos;

@@ -43,7 +43,10 @@ pub async fn get_video_metadata(vid: &str) -> Result<VideoMetadata, reqwest::Err
         return Err(response.error_for_status().unwrap_err());
     }
 
-    let metadata: VideoMetadata = response.json().await?;
+    let mut metadata: VideoMetadata = response.json().await?;
+
+    // ¯\_(ツ)_/¯
+    metadata.title = metadata.title.replace("/", "/ ");
 
     Ok(metadata)
 }

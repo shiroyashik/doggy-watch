@@ -6,8 +6,10 @@ use sea_orm::entity::prelude::*;
 #[sea_orm(table_name = "moderators")]
 pub struct Model {
     #[sea_orm(primary_key, auto_increment = false)]
-    pub uid: String,
+    pub id: i64,
     pub created_at: DateTime,
+    pub notify: bool,
+    pub can_add_mods: bool,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
