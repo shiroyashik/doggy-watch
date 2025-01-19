@@ -6,11 +6,12 @@ edition = "2021"
 publish = false
 
 [workspace]
-members = [ "database", "youtube", "database/migration" ]
+members = [ "database", "youtube", "migration" ]
 
 [dependencies]
 database = { path = "database" }
 youtube = { path = "youtube" }
+migration = { path = "migration"}
 
 anyhow = "1.0"
 dotenvy = "0.15"

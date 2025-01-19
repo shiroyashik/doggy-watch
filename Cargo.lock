@@ -803,6 +803,7 @@ dependencies = [
  "dotenvy",
  "indexmap",
  "lazy_static",
+ "migration",
  "sea-orm",
  "teloxide",
  "tokio",

@@ -2,6 +2,7 @@ use std::{env::var, sync::Arc, time::Duration};
 
 use dashmap::DashMap;
 use database::moderators;
+use migration::{Migrator, MigratorTrait};
 use sea_orm::{prelude::*, sea_query::OnConflict, ConnectOptions, Database, Set};
 use teloxide::{
     dispatching::dialogue::InMemStorage,
@@ -65,6 +66,9 @@ async fn main() -> anyhow::Result<()> {
     let mut opt = ConnectOptions::new(&*DATABASE_URL);
     opt.sqlx_logging_level(tracing::log::LevelFilter::Trace);
     let db: DatabaseConnection = Database::connect(opt).await?;
+
+    // applying migrations
+    Migrator::up(&db, None).await?;
 
     // add administrators to db
     {
