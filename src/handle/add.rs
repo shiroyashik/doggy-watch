@@ -10,7 +10,7 @@ use crate::{check_subscription, markup, notify, AppState, DialogueState, MyDialo
 pub async fn message(bot: Bot, msg: Message, dialogue: MyDialogue) -> anyhow::Result<()> {
     use youtube::*;
     if let Some(text) = msg.clone().text() {
-        if let Some(user) = check_subscription(&bot, &msg.from.ok_or(anyhow::anyhow!("Message not from user!"))?.id).await {
+        if let Some(user) = check_subscription(&bot, &msg.clone().from.ok_or(anyhow::anyhow!("Message not from user!"))?.id).await {
             // Get ready!
             if let Some(ytid) = extract_youtube_video_id(text) {
                 let meta = get_video_metadata(&ytid).await?;
@@ -21,7 +21,8 @@ pub async fn message(bot: Bot, msg: Message, dialogue: MyDialogue) -> anyhow::Re
                 )).parse_mode(ParseMode::Html).reply_markup(markup::inline_yes_or_no()).await?;
                 dialogue.update(DialogueState::AcceptVideo { ytid, uid: user.id.0, title: meta.title }).await?;
             } else {
-                bot.send_message(msg.chat.id, "Это не похоже на YouTube видео... Долбоёб").await?; 
+                tracing::debug!("Not a YouTube video: {:?}", msg);
+                bot.send_message(msg.chat.id, "Это не похоже на YouTube видео... Долбоёб").await?;
             }
         } else {
             let link = if let Some(hash) = CHANNEL_INVITE_HASH.as_ref() {

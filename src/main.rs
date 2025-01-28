@@ -93,7 +93,7 @@ async fn main() -> anyhow::Result<()> {
         // Pass the shared state to the handler as a dependency.
         .dependencies(dptree::deps![state, InMemStorage::<DialogueState>::new()])
         .default_handler(|upd| async move {
-            tracing::warn!("Unhandled update: {:?}", upd);
+            tracing::debug!("Unhandled update: {:?}", upd);
         })
         .enable_ctrlc_handler()
         .build()
@@ -184,7 +184,7 @@ impl AppState {
     async fn check_rights(&self, uid: &UserId) -> anyhow::Result<Rights> {
         use database::moderators::Entity as Moderators;
 
-        Ok(if let Some(moder) = Moderators::find_by_id(uid.0 as i32).one(&self.db).await? {
+        Ok(if let Some(moder) = Moderators::find_by_id(uid.0 as i64).one(&self.db).await? {
             Rights::Moderator { can_add_mods: moder.can_add_mods }
         } else {
             Rights::None
