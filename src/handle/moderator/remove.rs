@@ -29,7 +29,7 @@ pub async fn inline(bot: Bot, q: CallbackQuery, state: Arc<AppState>, uid: Strin
         if let Some(data) = q.clone().data {
             let text= if &data == "yes" {
                 if let Ok(uid) = uid.parse::<u64>() {
-                    if Entity::delete_by_id(uid as i32).exec(&state.db).await?.rows_affected != 0 {
+                    if Entity::delete_by_id(uid as i64).exec(&state.db).await?.rows_affected != 0 {
                         "Модератор удалён!"
                     } else {
                         "Произошла ошибка!\nПо всей видимости такого модератора не существует."
