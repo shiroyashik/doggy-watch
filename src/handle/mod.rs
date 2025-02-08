@@ -19,6 +19,7 @@ pub fn schema() -> UpdateHandler<anyhow::Error> {
     use dptree::case;
     let moderator_commands = dptree::entry()
         .branch(case![Command::Start].endpoint(start::command_mod))
+        .branch(case![Command::Help].endpoint(start::command_mod))
         .branch(case![Command::List].endpoint(list::command))
         .branch(case![Command::Archive].endpoint(archive::command))
         .branch(case![Command::Mods].endpoint(moderator::list::command))

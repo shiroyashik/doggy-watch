@@ -17,6 +17,7 @@ mod markup;
 
 mod inline;
 pub use inline::InlineCommand;
+use url::Url;
 
 pub const COOLDOWN_DURATION: Duration = Duration::from_secs(10);
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -27,6 +28,12 @@ lazy_static! {
     };
     pub static ref TOKEN: String = {
         var("TOKEN").expect("TOKEN env not set.")
+    };
+    pub static ref TELEGRAM_API_URL: Url = {
+        match var("TELEGRAM_API_URL") {
+            Ok(url) => url.parse().expect("Can't parse TELEGRAM_API_URL"),
+            Err(_) => teloxide::net::TELEGRAM_API_URL.parse().expect("Failed to parse default Telegram bot API url")
+        }
     };
     pub static ref DATABASE_URL: String = {
         var("DATABASE_URL").expect("DATABASE_URL env not set.")
@@ -60,8 +67,8 @@ async fn main() -> anyhow::Result<()> {
     }));
 
     tracing::info!("Doggy-Watch v{VERSION}");
-    tracing::info!("{:?}", *ADMINISTRATORS);
-    let bot = Bot::new(&*TOKEN);
+    tracing::info!("admins: {:?} tg api: {}", *ADMINISTRATORS, TELEGRAM_API_URL.as_str());
+    let bot = Bot::new(&*TOKEN).set_api_url(TELEGRAM_API_URL.clone());
 
     let mut opt = ConnectOptions::new(&*DATABASE_URL);
     opt.sqlx_logging_level(tracing::log::LevelFilter::Trace);
@@ -120,6 +127,8 @@ pub enum DialogueState {
 enum Command {
     #[command(description = "запустить бота и/или вывести этот текст.")]
     Start,
+    #[command(description = "вывести этот текст.")]
+    Help,
     #[command(description = "вывести список.")]
     List,
     #[command(description = "действия с архивом.")]

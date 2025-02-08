@@ -26,6 +26,7 @@ tracing-panic = "0.1"
 lazy_static = "1.5"
 indexmap = "2.7"
 dashmap = "6.1"
+url = "2.5"
 
 # https://github.com/teloxide/teloxide/issues/1154
 # [profile.dev]

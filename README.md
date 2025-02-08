@@ -35,6 +35,10 @@ ID канала для проверки подписки.
 `trace, debug, info, warn, error`
 Также можно указать отдельный уровень логирования для отдельных целей.
 
+`TELEGRAM_API_URL=<url>`
+
+Сторонний Telegram Bot API сервер (необязательно).
+
 ### Только для Docker
 
 `TZ=<TZ_identifier>`

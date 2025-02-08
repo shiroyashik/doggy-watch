@@ -108,21 +108,21 @@ impl MigrationTrait for Migration {
     }
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
-        // Videos
+        // Actions
         manager
-            .drop_table(Table::drop().table(Videos::Table).to_owned())
+            .drop_table(Table::drop().table(Actions::Table).to_owned())
             .await?;
         // Requests
         manager
             .drop_table(Table::drop().table(Requests::Table).to_owned())
             .await?;
-        // Actions
-        manager
-            .drop_table(Table::drop().table(Actions::Table).to_owned())
-            .await?;
         // Archived
         manager
             .drop_table(Table::drop().table(Archived::Table).to_owned())
+            .await?;
+        // Videos
+        manager
+            .drop_table(Table::drop().table(Videos::Table).to_owned())
             .await?;
         // Moderators
         manager

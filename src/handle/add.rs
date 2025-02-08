@@ -13,7 +13,14 @@ pub async fn message(bot: Bot, msg: Message, dialogue: MyDialogue) -> anyhow::Re
         if let Some(user) = check_subscription(&bot, &msg.clone().from.ok_or(anyhow::anyhow!("Message not from user!"))?.id).await {
             // Get ready!
             if let Some(ytid) = extract_youtube_video_id(text) {
-                let meta = get_video_metadata(&ytid).await?;
+                let meta = match get_video_metadata(&ytid).await {
+                    Ok(meta) => meta,
+                    Err(err) => {
+                        tracing::error!("Caused an exception in get_video_metadata due: {err:?}");
+                        bot.send_message(msg.chat.id, "Ошибка при получении метаданных видео!").await?;
+                        return Ok(());
+                    },
+                };
                 // Post
                 bot.send_message(msg.chat.id, format!(
                     "Вы уверены что хотите добавить <b>{}</b>",
