@@ -6,6 +6,7 @@ pub enum InlineCommand {
     Unview(i32),
     ArchiveViewed,
     ArchiveAll,
+    ListUnviewed,
     Cancel,
 }
 
@@ -19,6 +20,7 @@ impl InlineCommand {
             "unview" => Self::Unview(parts.next()?.parse().ok()?),
             "archive_viewed" => Self::ArchiveViewed,
             "archive_all" => Self::ArchiveAll,
+            "list_unviewed" => Self::ListUnviewed,
             "cancel" => Self::Cancel,
             _ => return None,
         })

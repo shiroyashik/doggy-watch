@@ -1,7 +1,7 @@
 [package]
 name = "doggy-watch"
 authors = ["Shiroyashik <shiroyashik@shsr.ru>"]
-version = "0.2.0"
+version = "0.2.2"
 edition = "2021"
 publish = false
 

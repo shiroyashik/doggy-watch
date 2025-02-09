@@ -74,6 +74,7 @@ pub fn schema() -> UpdateHandler<anyhow::Error> {
             InlineCommand::parse(&q.data?)
         }))
         .branch(case![InlineCommand::Cancel].endpoint(cancel))
+        .branch(case![InlineCommand::ListUnviewed].endpoint(list::inline))
         .branch(filter(|com: InlineCommand| {
             matches!(com, InlineCommand::ArchiveAll | InlineCommand::ArchiveViewed)
         }).endpoint(archive::inline))
